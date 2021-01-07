@@ -14,4 +14,11 @@ add_connection(self, node, time):None
 get_connections(self):{}
 get_coordinates(self):(x_coordinate, y_coordinate)
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>130</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..n</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element></diagram>
+m1=0..n</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>360</y><w>290</w><h>250</h></coordinates><panel_attributes>Traject
+--
+traject_id: Int
+stations: List
+--
+add_station(self, node):None
+get_stations(self):stations
+get_traject_time(self):Int</panel_attributes><additional_attributes></additional_attributes></element></diagram>
