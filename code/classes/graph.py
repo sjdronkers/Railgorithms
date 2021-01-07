@@ -14,7 +14,7 @@ class Graph():
             counter = 1
 
             for row in reader:
-                nodes[row['station']] = Node(row['station'], counter, row['x'], row['y'])
+                nodes[row['station']] = Node(row['station'], counter, float(row['x']), float(row['y']))
                 counter = (counter + 1)
 
         return nodes
