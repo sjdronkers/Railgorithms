@@ -1,21 +1,15 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>60</x><y>260</y><w>260</w><h>120</h></coordinates><panel_attributes>Graph (Rail_Map)
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>70</x><y>260</y><w>210</w><h>140</h></coordinates><panel_attributes>Graph
 --
-nodes:[Node]
---
-connection_time(self, station_1, station_2):Int
-
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>390</x><y>260</y><w>300</w><h>180</h></coordinates><panel_attributes>Node (Station)
+nodes:[Node]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>470</x><y>330</y><w>270</w><h>140</h></coordinates><panel_attributes>Node (Station)
 --
 city: String
 id: Int
-connections: {Node : time}
-x_coordinate: String
-y_coordinate: String
+connections: {Node : min : Bool (default=false) }
+x_coordinate: Float
+y_coordinate: Float
 --
-add_connection(self, node, time):None
-get_connections(self):connections
-get_coordinates(self): (x_coordinate, y_coordinate)
+add_connection(self, node, min):None
+get_connections(self):{}
 
-
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>267</y><w>100</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..n</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>270</x><y>267</y><w>220</w><h>100</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes><additional_attributes>10;10;200;80</additional_attributes></element></diagram>
