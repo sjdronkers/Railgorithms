@@ -26,7 +26,7 @@ class Graph():
             for row in reader:
                 station_1 = row['station1']
                 station_2 = row['station2']
-                time = int(row['distance'])
+                time = int(float(row['distance']))
 
                 self.nodes[station_1].add_connection(self.nodes[station_2], time)
                 self.nodes[station_2].add_connection(self.nodes[station_1], time)
