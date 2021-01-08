@@ -30,3 +30,17 @@ class Graph():
 
                 self.nodes[station_1].add_connection(self.nodes[station_2], time)
                 self.nodes[station_2].add_connection(self.nodes[station_1], time)
+
+    def get_connections_value(self):
+        total_connections = 0
+        covered_connections = 0
+        for node in self.nodes.values():
+            connections = node.get_connections()
+            for connection in connections.values():
+                total_connections = total_connections + 1
+                if connection[1] == True:
+                    covered_connections = covered_connections + 1
+
+        p_value = (covered_connections / total_connections)
+
+        return p_value
