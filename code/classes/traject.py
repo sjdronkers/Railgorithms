@@ -8,7 +8,7 @@ class Traject():
         self.stations.append(node)
         station_1 = None
         for station in self.stations:
-            if station_1 is not None
+            if station_1 is not None:
                     connections = station.get_connections()
                     station_list = connections[station_1]
                     station_list[1] = True
