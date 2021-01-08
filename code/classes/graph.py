@@ -30,4 +30,3 @@ class Graph():
 
                 self.nodes[station_1].add_connection(self.nodes[station_2], time)
                 self.nodes[station_2].add_connection(self.nodes[station_1], time)
-

@@ -10,8 +10,8 @@ class Node():
         self.connections[node] = time
 
     def get_connections(self):
-        return(self.connections)
+        return self.connections
 
     def get_coordinates(self):
         coordinates = (self.x_coordinate, self.y_coordinate)
-        return(coordinates)
+        return coordinates
