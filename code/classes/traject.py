@@ -10,7 +10,7 @@ class Traject():
         return self.stations
 
     def get_traject_time(self):
-        station1 = None
+        station_1 = None
         traject_time = 0
         time = 0
         for station in self.stations:
@@ -19,5 +19,4 @@ class Traject():
                 time = connections[station]
             traject_time = traject_time + time
             station_1 = station
-
         return traject_time
