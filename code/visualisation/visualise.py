@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 def visualise(graph):
     """ Plots the stations with its connections on a basemap of NL."""
-    matplotlib.use('WebAgg')
+    # matplotlib.use('WebAgg')
 
     stations = graph.nodes.values()
     x_coords = [station.get_coordinates()[0] for station in stations]
@@ -47,5 +47,7 @@ def visualise(graph):
     ax.set_ylim(BBox[2], BBox[3])
 
     ax.imshow(ruh_m, extent=BBox, aspect='auto')
+
+    plt.savefig('results/railmap.png')
 
     plt.show()
