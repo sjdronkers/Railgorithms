@@ -6,7 +6,7 @@ Train companies are always looking to find the most efficient trajectories to co
 
 ### Prerequisites
 
-This code base is written in Python 3.8.3 and up. Other requirements such as pages, can be installed by entering the follwing command:
+This code base is written in Python 3.8.3 and up. Other requirements such as paackages, can be installed by entering the following command:
 
 ```
 pip3 install -r requirements.txt
