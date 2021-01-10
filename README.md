@@ -1,12 +1,16 @@
 # Railgorithms
 
-With
+Train companies are always looking to find the most efficient trajectories to cover all the stations and railways. With our program we are going to use two algorithms to come up with different solutions. 
 
 ## Getting Started
 
 ### Prerequisites
 
-This code base is written in Python 3.8.3 and up.
+This code base is written in Python 3.8.3 and up. Other requirements such as pages, can be installed by entering the follwing command:
+
+```
+pip3 install -r requirements.txt
+```
 
 ### Usage
 
