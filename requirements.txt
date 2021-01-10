@@ -1,0 +1,4 @@
+pandas==1.2.0
+tornado==6.1
+matplotlib==3.3.3
+adjustText==0.7.3
