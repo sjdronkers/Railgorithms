@@ -2,9 +2,10 @@
 # Credit to GitHub user Phyla for adjustText library: https://github.com/Phlya/adjustText (10.5281/zenodo.3924114)
 
 from adjustText import adjust_text
+from matplotlib.pyplot import cm
 import numpy as np
 import pandas as pd
-import matplotlib
+import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 
 def visualise(graph):
@@ -31,7 +32,7 @@ def visualise(graph):
     fig, ax = plt.subplots(figsize = (5.8266, 6.85))
 
     # Draws the stations as a scatterplot.
-    ax.scatter(y_coords, x_coords, zorder=1, c='b', s=7)
+    ax.scatter(y_coords, x_coords, zorder=1, c='black', s=7)
 
     # Draws a line between stations for every connection.
     for station in stations:
@@ -51,40 +52,79 @@ def visualise(graph):
             x_coords.pop()
             y_coords.pop()
 
-    # Draws a line with a unique colour for every traject.
-    texts = []
-    for traject_num, traject in enumerate(graph.trajects):
-        x_coords.clear()
-        y_coords.clear()
+    x_coords.clear()
+    y_coords.clear()
 
+    # Stores every coordinate with 'None' breaks to group trajects.
+    for traject in graph.trajects:
         for station in traject.get_stations():
             station_coords = station.get_coordinates()
             x_coords.append(station_coords[0])
             y_coords.append(station_coords[1])
 
-            ax.plot(y_coords, x_coords, c=f'C{traject_num}')
-
-            # Avoids plotting between the connections themselves.
-            if len(x_coords) > 1:
-                x_coords.pop(0)
-                y_coords.pop(0)
-            else:
-                # Labels the first station number with the traject colour.
-                texts.append(ax.text(
-                    y_coords[0], x_coords[0],
-                    '1', ha='center', va='center',
-                    c=f'C{traject_num}', fontsize=10))
+        # Adds a break between stations.
+        x_coords.append(None)
+        y_coords.append(None)
 
     # Changes the plot properties.
     ax.set_title("Rail Map")
     ax.set_xlim(BBox[0], BBox[1])
     ax.set_ylim(BBox[2], BBox[3])
 
+    ax.imshow(ruh_m, extent=BBox, aspect='auto')
+
+    n_lines = x_coords.count(None)
+    lines = [ax.plot([], [], lw=2)[0] for i in range(n_lines)]
+
+    xdata, ydata = [], []
+    texts = []
+    line_count = [0]
+
+    def init():
+        """Creates the empty background frame for the animation."""
+        [lines[i].set_data([], []) for i in range(n_lines)]
+        return lines
+
+    def animate(i, line_count, total_frames):
+        """Draws trajects sequentially with unique colours.'"""
+        print(f"Animation Progress: {round(i/total_frames * 100)}%")
+
+        x = y_coords[i]
+        y = x_coords[i]
+
+        if x == None:
+
+            line_count[0] += 1
+
+            xdata.clear()
+            ydata.clear()
+        else:
+            xdata.append(x)
+            ydata.append(y)
+
+        if len(xdata) == 1:
+            # Labels the first station of a traject.
+            texts.append(ax.text(
+                x, y,
+                f'{line_count[0] + 1}',
+                c=f'{lines[line_count[0]].get_color()}', fontsize=10))
+
+        if line_count[0] < len(lines):
+            lines[line_count[0]].set_data(xdata, ydata)
+
+        return lines
+
+    anim = animation.FuncAnimation(fig, animate,
+                                    fargs = [line_count, len(x_coords)],
+                                    init_func=init, frames=len(x_coords),
+                                    interval=400, blit=True)
+
+    anim.save('results/dynamic_railmap.gif')
+    print("Animation successfully saved to results/dynamic_railmap.gif!")
+
     # Adjusts the station numbers to avoid overlap.
     adjust_text(texts)
 
-    ax.imshow(ruh_m, extent=BBox, aspect='auto')
-
-    plt.savefig('results/railmap.png')
-
     plt.show()
+
+    plt.savefig('results/static_railmap.png')

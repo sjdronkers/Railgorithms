@@ -33,12 +33,10 @@ class Graph():
         nodes = {}
         with open(stations_file, 'r') as in_file:
             reader = csv.DictReader(in_file)
-            counter = 1
 
-            for row in reader:
+            for counter, row in enumerate(reader):
                 nodes[row['station']] = Node(row['station'], counter,
                     float(row['x']), float(row['y']))
-                counter += 1
 
         return nodes
 
@@ -80,14 +78,17 @@ class Graph():
         return p_value
 
     def get_traject_time_total(self):
+        """Returns the sum of all connection distances."""
         traject_time = 0
-        for traject in self.trajects():
+        for traject in self.trajects:
             traject_time += traject.get_traject_time()
 
         return traject_time
 
     def get_result(self):
-        k_value = self.get_connections_p_value() * 1000 - (len(self.trajects) * 100 + self.get_traject_time_total())
+        """Returns the k in k = p*10000 - (T*100 + Min)."""
+        k_value = self.get_connections_p_value() * 10000 - (
+            len(self.trajects) * 100 + self.get_traject_time_total())
 
         return k_value
 
