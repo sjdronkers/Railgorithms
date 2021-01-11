@@ -1,13 +1,14 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>0</x><y>193</y><w>250</w><h>130</h></coordinates><panel_attributes>Graph
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>0</x><y>193</y><w>250</w><h>160</h></coordinates><panel_attributes>Graph
 --
 nodes:{node.city: Node}
 trajects: [Trajects]
 --
-load_nodes(csv): {node.city: Node}
-load_connections(csv): None
-add_traject(Traject): None
-get_connections_value(): Float
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>290</x><y>133</y><w>280</w><h>160</h></coordinates><panel_attributes>Node (Station)
+load_nodes(self, csv): {node.city: Node}
+load_connections(self, csv): None
+add_traject(self, Traject): None
+get_connections_p_value(self): Float
+get_traject_time_total(self): Int
+get_result(self): Float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>290</x><y>133</y><w>280</w><h>160</h></coordinates><panel_attributes>Node (Station)
 --
 city: String
 id: Int
@@ -19,7 +20,7 @@ add_connection(self, node, time):None
 get_connections(self):connections
 get_coordinates(self):(x_coordinate, y_coordinate)
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>130</y><w>70</w><h>90</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..n</panel_attributes><additional_attributes>10;70;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>360</y><w>290</w><h>140</h></coordinates><panel_attributes>Traject
+m1=0..n</panel_attributes><additional_attributes>10;70;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>360</y><w>290</w><h>120</h></coordinates><panel_attributes>Traject
 --
 traject_id: Int
 stations: List

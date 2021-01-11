@@ -37,7 +37,7 @@ class Graph():
 
             for row in reader:
                 nodes[row['station']] = Node(row['station'], counter,
-                                            float(row['x']), float(row['y']))
+                    float(row['x']), float(row['y']))
                 counter += 1
 
         return nodes
@@ -60,7 +60,7 @@ class Graph():
         """Adds a Traject object to the graph's trajects list."""
         trajects.append(traject)
 
-    def get_connections_value(self):
+    def get_connections_p_value(self):
         """Returns p value that represents fraction of used connections."""
         total_connections = 0
         covered_connections = 0
@@ -78,3 +78,20 @@ class Graph():
         p_value = (covered_connections / total_connections)
 
         return p_value
+
+    def get_traject_time_total(self):
+        traject_time = 0
+        for traject in self.trajects():
+            traject_time += traject.get_traject_time()
+
+        return traject_time
+
+    def get_result(self):
+        k_value = self.get_connections_p_value() * 1000 - (len(self.trajects) * 100 + self.get_traject_time_total())
+
+        return k_value
+
+
+
+
+
