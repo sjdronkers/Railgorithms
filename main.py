@@ -5,24 +5,40 @@ from code.visualisation import visualise as vis
 import csv
 
 if __name__ == "__main__":
-    test_holland = graph.Graph(f"data/Holland/StationsHolland.csv",
-                                f"data/Holland/ConnectiesHolland.csv")
-    test_nationaal = graph.Graph(f"data/Nationaal/StationsNationaal.csv",
-                                f"data/Nationaal/ConnectiesNationaal.csv")
+
+    # get user input for the region, default to Nationaal
+    region = input("Do you want routes for (H)olland or (N)ational? ")
+    region = region.lower()
+    if region == "holland" or region == "h":
+        region = "Holland"
+    else:
+        region = "Nationaal"
+
+    # create graph
+    usable_graph = graph.Graph(f"data/{region}/Stations{region}.csv",
+                                f"data/{region}/Connecties{region}.csv")
+    
+    # ask if the user wants a visualization
+    want_anim = input("Do you want an animation? (Y)es or (N)o? ")
+    want_anim = want_anim.lower()
+    if want_anim in "no":
+        want_anim = False
+
+    # getting the amount of trajectories and time frame
+    train_amount = int(input("What is the maximum amount of routes? "))
+    time_frame = int(input("What is the time frame in minutes? "))
+
+    # check for valid user input
+    if not isinstance(train_amount, int) or train_amount < 0:
+        train_amount = 7
+    if not isinstance(time_frame, int) or time_frame < 0:
+        time_frame = 120
 
     # Dit zijn de waarden van opdracht 1 op de RailNL pagina.
-    greedy = gr.Greedy(test_holland, 7, 120)
+    greedy = gr.Greedy(usable_graph, train_amount, time_frame)
     greedy.run()
 
-    """
-    Heb de print statements nog even laten staan voor eventuele debugging
-    for traj in greedy.graph.trajects:
-        print(f"{[station.city for station in traj.get_stations()]}, "
-            f"time: {traj.get_traject_time()}")
-    print(greedy.graph.get_connections_value())
-    """
-
-    vis.visualise(greedy.graph)
+    vis.visualise(greedy.graph, want_anim)
 
     # create csv file for output
     with open('results/output.csv', 'w', newline='') as file:

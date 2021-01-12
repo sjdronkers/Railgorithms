@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 
-def visualise(graph):
+def visualise(graph, want_anim):
     """ Plots the stations and trajects on a basemap of NL.
 
     First, a blue scatter plot is made with the coords of all stations.
@@ -114,13 +114,15 @@ def visualise(graph):
 
         return lines
 
-    anim = animation.FuncAnimation(fig, animate,
-                                    fargs = [line_count, len(x_coords)],
-                                    init_func=init, frames=len(x_coords),
-                                    interval=400, blit=True)
+    # check if the user wants an animation
+    if want_anim:
+        anim = animation.FuncAnimation(fig, animate,
+                                        fargs = [line_count, len(x_coords)],
+                                        init_func=init, frames=len(x_coords),
+                                        interval=400, blit=True)
 
-    anim.save('results/dynamic_railmap.gif')
-    print("Animation successfully saved to results/dynamic_railmap.gif!")
+        anim.save('results/dynamic_railmap.gif')
+        print("Animation successfully saved to results/dynamic_railmap.gif!")
 
     # Adjusts the station numbers to avoid overlap.
     adjust_text(texts)
