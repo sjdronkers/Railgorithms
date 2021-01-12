@@ -7,10 +7,12 @@ import csv
 if __name__ == "__main__":
 
     # get user input for the region, default to Nationaal
-    region = input("Do you want routes for (H)olland or (N)ational? ")
+    region = input("Do you want routes for (H)olland, (N)ational or (A)lkmaar? ")
     region = region.lower()
     if region == "holland" or region == "h":
         region = "Holland"
+    elif region == "alkmaar" or region == "a":
+        region = "Alkmaar"
     else:
         region = "Nationaal"
 
