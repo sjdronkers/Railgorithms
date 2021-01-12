@@ -127,6 +127,6 @@ def visualise(graph, want_anim):
     # Adjusts the station numbers to avoid overlap.
     adjust_text(texts)
 
-    plt.show()
+    # plt.show()
 
     plt.savefig('results/static_railmap.png')
