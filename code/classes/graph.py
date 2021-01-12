@@ -56,7 +56,7 @@ class Graph():
 
     def add_traject(self, traject):
         """Adds a Traject object to the graph's trajects list."""
-        trajects.append(traject)
+        self.trajects.append(traject)
 
     def get_connections_p_value(self):
         """Returns p value that represents fraction of used connections."""
