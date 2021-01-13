@@ -59,8 +59,11 @@ class Greedy():
                                     min(node.connections.values())))
 
         traject_id = 1
+
         # Goes through the sorted nodes to start trajects.
         while nodes and traject_id <= self.max_trajects:
+            nodes.sort(key=lambda node: (node.get_n_unused_connections()))
+
             station = nodes[0]
             # Checks if any station can be reached at all.
             if not self.get_next_station(station):

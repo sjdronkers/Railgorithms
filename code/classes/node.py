@@ -41,3 +41,8 @@ class Node():
         """Returns a tuple consisting of x & y coordinates."""
         coordinates = (self.x_coordinate, self.y_coordinate)
         return coordinates
+
+    def get_n_unused_connections(self):
+        """Returns the amount of unused (False) connections."""
+        connections_values = list(self.connections.values())
+        return sum(value.count(False) for value in connections_values)
