@@ -54,14 +54,11 @@ class Greedy():
         available for the next station.
         """
         nodes = list(self.graph.nodes.values())
-        # Sorts stations by amount of connections & by distance.
-        nodes.sort(key=lambda node: (len(node.connections.values()),
-                                    min(node.connections.values())))
-
         traject_id = 1
 
         # Goes through the sorted nodes to start trajects.
         while nodes and traject_id <= self.max_trajects:
+            # Chooses starting station based on amount of unused connections.
             nodes.sort(key=lambda node: (node.get_n_unused_connections()))
             station = nodes[0]
 
