@@ -36,10 +36,10 @@ class depth():
 
     def check_solution(self, new_graph):
         result = new_graph.get_result()
-            if result > self.best_value:
-                self.best_solution = new_graph
-                self.best_value = result
-                print(f"New best value: {self.best_value}")
+        if result > self.best_value:
+            self.best_solution = new_graph
+            self.best_value = result
+            print(f"New best value: {self.best_value}")
 
     def starting_station (self, graph, route_id):
         for station in self.stations:
@@ -57,7 +57,7 @@ class depth():
 
             if current_route <= self.max_trajects and not new_graph.routes[current_route]:
                 self.starting_station(new_graph, current_route)
-            elif current_route <= self.max_trajects
+            elif current_route <= self.max_trajects:
                 if new_graph.routes[current_route].get_route_time() < self.time_frame:
                     if new_graph.get_connections_p_value == 1:
                         self.check_solution(new_graph)

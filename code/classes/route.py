@@ -66,10 +66,10 @@ class Route():
         both directions.
         """
         if node == self.stations[-1]:
-            self.connection_change(node, self.stations[-2]))
+            self.connection_change(node, self.stations[-2])
 
             return self.stations.pop(-1)
-        else if node == self.stations[0]:
+        elif node == self.stations[0]:
             self.connection_change(node, self.stations[1])
 
             return self.stations.pop(0)
@@ -80,14 +80,14 @@ class Route():
         # Sets the back & forth connection between the stations as (un)covered.
         connections = station_1.get_connections()
         station_list = connections[station_2]
-        if remove = True:
+        if remove == True:
             station_list[1] -= 1
         else:
             station_list[1] += 1
 
         connections = station_2.get_connections()
         station_list = connections[station_1]
-        if remove = True
+        if remove == True:
             station_list[1] -= 1
         else:
             station_list[1] += 1
