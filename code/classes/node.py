@@ -31,7 +31,7 @@ class Node():
 
     def add_connection(self, node, time):
         """Adds connection to the dict with the time & covered state."""
-        self.connections[node] = [time, False]
+        self.connections[node] = [time, 0]
 
     def get_connections(self):
         """Returns dict with Nodes as keys and time & bool as value."""

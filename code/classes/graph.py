@@ -10,7 +10,7 @@ class Graph():
 
     Attributes:
     |nodes: {node.city: Node}
-    |trajects: [Traject]
+    |routes: [Route]
 
     Methods:
     |__init__(stations_csv, connections_csv): initialises a graph by
@@ -18,7 +18,7 @@ class Graph():
     |load_nodes(stations_csv): opens csv file & creates Node objects.
     |load_connections(connections_csv): opens csv file & creates
     |   back & forth connections between Node objects.
-    |add_traject(Traject): appends traject to the trajects list.
+    |add_route(Route): appends route to the routes list.
     |get_connections_value(): returns a p value that represents the
     |   fraction of used connections of the total connections.
     """
@@ -26,7 +26,7 @@ class Graph():
         """Requires a csv with stations & csv with connections."""
         self.nodes = self.load_nodes(stations_file)
         self.load_connections(connections_file)
-        self.trajects = []
+        self.routes = []
 
     def load_nodes(self, stations_file):
         """Opens a csv file & creates Nodes for every station."""
@@ -54,9 +54,9 @@ class Graph():
                 self.nodes[station_1].add_connection(self.nodes[station_2], time)
                 self.nodes[station_2].add_connection(self.nodes[station_1], time)
 
-    def add_traject(self, traject):
-        """Adds a Traject object to the graph's trajects list."""
-        self.trajects.append(traject)
+    def add_route(self, route):
+        """Adds a Route object to the graph's routes list."""
+        self.routes.append(route)
 
     def get_connections_p_value(self):
         """Returns p value that represents fraction of used connections."""
@@ -70,25 +70,25 @@ class Graph():
             # Counts all the covered connections of the station.
             for connection in connections.values():
                 total_connections += 1
-                if connection[1] == True:
+                if connection[1] > 0:
                     covered_connections += 1
 
         p_value = (covered_connections / total_connections)
 
         return p_value
 
-    def get_traject_time_total(self):
+    def get_route_time_total(self):
         """Returns the sum of all connection distances."""
-        traject_time = 0
-        for traject in self.trajects:
-            traject_time += traject.get_traject_time()
+        route_time = 0
+        for route in self.routes:
+            route_time += route.get_route_time()
 
-        return traject_time
+        return route_time
 
     def get_result(self):
         """Returns the k in k = p*10000 - (T*100 + Min)."""
         k_value = self.get_connections_p_value() * 10000 - (
-            len(self.trajects) * 100 + self.get_traject_time_total())
+            len(self.routes) * 100 + self.get_route_time_total())
 
         return k_value
 
