@@ -58,7 +58,7 @@ class Route():
 
         return route_time
 
-    def remove_last_station(self, node):
+    def remove_station(self, node):
         """
         Removes a (first or last) station to the route and marks connection as unused for this route.
 
