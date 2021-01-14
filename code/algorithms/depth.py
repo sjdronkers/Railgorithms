@@ -1,7 +1,7 @@
 from code.classes import route
 import copy
 
-class depth():
+class Depth():
     def __init__(self, graph, max_trajects, time_frame):
         self.graph = copy.deepcopy(graph)
         self.max_trajects = max_trajects
