@@ -42,7 +42,7 @@ def visualise(graph, want_anim):
 
         # Plots a black line between every connection.
         for connection in station.get_connections():
-            connection_coords = connection.get_coordinates()
+            connection_coords = graph.nodes[connection].get_coordinates()
             x_coords.append(connection_coords[0])
             y_coords.append(connection_coords[1])
 
@@ -55,12 +55,12 @@ def visualise(graph, want_anim):
     coords = []
 
     # Stores every coordinate with 'None' breaks to group trajects.
-    for traject in graph.trajects:
+    for route in graph.routes.values():
         # Signals a start of a new route/train.
         coords.append(None)
 
-        for station in traject.get_stations():
-            station_coords = station.get_coordinates()
+        for station in route.get_stations():
+            station_coords = graph.nodes[station].get_coordinates()
             coords.append((station_coords[0], station_coords[1]))
 
     # Changes the plot's properties.
