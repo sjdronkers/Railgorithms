@@ -23,16 +23,17 @@ class Route():
         self.route_id = uid
         self.stations = []
 
-    def add_station(self, node):
+    def add_station(self, city):
         """
         Adds a station to the route and marks connection as used in this route.
 
         When a station is added, the connection is set + 1 for
         both directions.
         """
-        self.stations.append(node)
+        self.stations.append(city)
         if len(self.stations) > 1:
-            self.connection_change(node, self.stations[-2], False)
+            return [city, self.stations[-2]]
+        return False
 
     def get_stations(self):
         """
@@ -40,57 +41,16 @@ class Route():
         """
         return self.stations
 
-    def get_route_time(self):
-        """
-        Returns the total time of every connection in the route.
-        """
-        station_1 = None
-        route_time = 0
-        time = 0
-
-        for station in self.stations:
-            if station_1 is not None:
-                connections = station_1.get_connections()
-                time = connections[station][0]
-
-            route_time += time
-            station_1 = station
-
-        return route_time
-
-    def remove_station(self, node):
+    def remove_station(self, city):
         """
         Removes a (first or last) station to the route and marks connection as unused for this route.
 
         When a station is removed, the connection is set - 1 for
         both directions.
         """
-        if node == self.stations[-1]:
-            self.connection_change(node, self.stations[-2])
-
-            return self.stations.pop(-1)
-        elif node == self.stations[0]:
-            self.connection_change(node, self.stations[1])
-
-            return self.stations.pop(0)
+        if city == self.stations[-1]:
+            return [self.stations.pop(-1), self.stations[-2]]
+        elif city == self.stations[0]:
+            return [self.stations.pop(0), self.stations[1]]
         else:
             return False
-
-    def connection_change(self, station_1, station_2, remove = True):
-        # Sets the back & forth connection between the stations as (un)covered.
-        connections = station_1.get_connections()
-        station_list = connections[station_2]
-        if remove == True:
-            station_list[1] -= 1
-        else:
-            station_list[1] += 1
-
-        connections = station_2.get_connections()
-        station_list = connections[station_1]
-        if remove == True:
-            station_list[1] -= 1
-        else:
-            station_list[1] += 1
-
-
-

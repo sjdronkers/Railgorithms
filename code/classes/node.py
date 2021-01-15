@@ -29,9 +29,9 @@ class Node():
         self.x_coordinate = x_coordinate
         self.y_coordinate = y_coordinate
 
-    def add_connection(self, node, time):
+    def add_connection(self, city, time):
         """Adds connection to the dict with the time & covered state."""
-        self.connections[node] = [time, 0]
+        self.connections[city] = [time, 0]
 
     def get_connections(self):
         """Returns dict with Nodes as keys and time & bool as value."""
