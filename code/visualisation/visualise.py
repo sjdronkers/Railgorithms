@@ -9,11 +9,11 @@ import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 
 def visualise(graph, want_anim):
-    """ Plots the stations and trajects on a basemap of NL.
+    """ Plots the stations and routes on a basemap of NL.
 
     First, a blue scatter plot is made with the coords of all stations.
     Second, all station connections are plotted with a black line.
-    Third, all trajects are drawn with a unique colour. The starting
+    Third, all routes are drawn with a unique colour. The starting
         station is labeled with a coloured number.
     Fourth, the coloured number are adjusted with the 'adjustText'
         library to avoid overlap between station numbers.
@@ -54,7 +54,7 @@ def visualise(graph, want_anim):
 
     coords = []
 
-    # Stores every coordinate with 'None' breaks to group trajects.
+    # Stores every coordinate with 'None' breaks to group routes.
     for route in graph.routes.values():
         # Signals a start of a new route/train.
         coords.append(None)
@@ -85,7 +85,7 @@ def visualise(graph, want_anim):
         return lines
 
     def animate(i, line_count, total_frames):
-        """Draws trajects sequentially with unique colours.'"""
+        """Draws routes sequentially with unique colours.'"""
         print(f"Animation Progress: {round(i/total_frames * 100)}%")
 
         # Resets route data for new route or adds to current route.
@@ -99,7 +99,7 @@ def visualise(graph, want_anim):
             ydata.append(coords[i][0])
 
         if len(xdata) == 1:
-            # Labels the first station of a traject.
+            # Labels the first station of a route.
             texts.append(ax.text(xdata[0], ydata[0], f'{line_count[0] + 1}',
                         c=f'{lines[line_count[0]].get_color()}', fontsize=10))
 
@@ -125,7 +125,7 @@ def visualise(graph, want_anim):
             if (i != len(coords) - 1
                 and coord is not None
                 and coords[i + 1] is not None):
-                # Plots lines between current and next station in a traject.
+                # Plots lines between current and next station in a route.
                 xdata = [coord[1], coords[i + 1][1]]
                 ydata = [coord[0], coords[i + 1][0]]
 
