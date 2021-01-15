@@ -60,40 +60,6 @@ class Graph():
         route = Route(route_id)
         self.routes[route_id] = route
 
-    def get_connections_p_value(self):
-        """Returns p value that represents fraction of used connections."""
-        total_connections = 0
-        covered_connections = 0
-
-        # Goes through every station.
-        for node in self.nodes.values():
-            connections = node.get_connections()
-
-            # Counts all the covered connections of the station.
-            for connection in connections.values():
-                total_connections += 1
-                if connection[1] > 0:
-                    covered_connections += 1
-
-        p_value = (covered_connections / total_connections)
-
-        return p_value
-
-    def get_route_time_total(self):
-        """Returns the sum of all connection distances."""
-        route_time = 0
-        for route in self.routes:
-            route_time += self.get_route_time(route)
-
-        return route_time
-
-    def get_result(self):
-        """Returns the k in k = p*10000 - (T*100 + Min)."""
-        k_value = self.get_connections_p_value() * 10000 - (
-            len(self.routes) * 100 + self.get_route_time_total())
-
-        return k_value
-
     def add_station(self, city, route_id):
         route = self.routes[route_id]
         cities = route.add_station(city)
@@ -144,6 +110,40 @@ class Graph():
             station_1 = station
 
         return route_time
+
+    def get_connections_p_value(self):
+        """Returns p value that represents fraction of used connections."""
+        total_connections = 0
+        covered_connections = 0
+
+        # Goes through every station.
+        for node in self.nodes.values():
+            connections = node.get_connections()
+
+            # Counts all the covered connections of the station.
+            for connection in connections.values():
+                total_connections += 1
+                if connection[1] > 0:
+                    covered_connections += 1
+
+        p_value = (covered_connections / total_connections)
+
+        return p_value
+
+    def get_route_time_total(self):
+        """Returns the sum of all connection distances."""
+        route_time = 0
+        for route in self.routes:
+            route_time += self.get_route_time(route)
+
+        return route_time
+
+    def get_result(self):
+        """Returns the k in k = p*10000 - (T*100 + Min)."""
+        k_value = self.get_connections_p_value() * 10000 - (
+            len(self.routes) * 100 + self.get_route_time_total())
+
+        return k_value
 
 
 
