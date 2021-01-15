@@ -49,8 +49,8 @@ class Route():
         both directions.
         """
         if city == self.stations[-1]:
-            return [self.stations.pop(-1), self.stations[-2]]
+            return [self.stations.pop(-1), self.stations[-1]]
         elif city == self.stations[0]:
-            return [self.stations.pop(0), self.stations[1]]
+            return [self.stations.pop(0), self.stations[0]]
         else:
             return False
