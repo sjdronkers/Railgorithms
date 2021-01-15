@@ -27,17 +27,22 @@ class Depth():
 
         for value in values:
             new_graph = copy.deepcopy(graph)
-            new_graph.routes[route_id].add_station(value)
+            new_graph_value = self.get_new_graph_node(new_graph, value)
+            new_graph.routes[route_id].add_station(new_graph_value)
             self.states.append(new_graph)
 
+    def get_new_graph_node(self, graph, node):
+        for station in graph.nodes:
+            if station == node.city:
+                return graph.nodes[station]
 
     def get_next_node(self, graph, route_id):
-        return graph.routes[route_id][-1]
+        return graph.routes[route_id].stations[-1]
 
-    def check_solution(self, new_graph):
-        result = new_graph.get_result()
+    def check_solution(self, graph):
+        result = graph.get_result()
         if result > self.best_value:
-            self.best_solution = new_graph
+            self.best_solution = graph
             self.best_value = result
             print(f"New best value: {self.best_value}")
 
@@ -50,23 +55,28 @@ class Depth():
             self.states.append(new_graph)
 
     def run(self):
-        max_time = self.max_trajects * self.time_frame
         current_route = 0
         while self.states:
             new_graph = self.get_next_state()
 
-            if current_route <= self.max_trajects and not new_graph.routes[current_route]:
-                self.starting_station(new_graph, current_route)
-            elif current_route <= self.max_trajects:
-                if new_graph.routes[current_route].get_route_time() < self.time_frame:
-                    if new_graph.get_connections_p_value == 1:
-                        self.check_solution(new_graph)
-                    else:
-                        self.check_solution(new_graph)
-                        self.build_children(new_graph, node, current_route)
-                else:
-                    new_graph.routes[route_id].remove_station(node)
-                    self.check_solution(new_graph)
-                    current_route += 1
+            try:
+                new_graph.routes[current_route]
+            except:
+                if current_route <= self.max_trajects:
+                    self.starting_station(new_graph, current_route)
             else:
-                current_route -= 1
+                if current_route <= self.max_trajects:
+                    if new_graph.routes[current_route].get_route_time() < self.time_frame:
+                        if new_graph.get_connections_p_value == 1:
+                            self.check_solution(new_graph)
+                        else:
+                            self.check_solution(new_graph)
+                            node = self.get_next_node(new_graph, current_route)
+                            self.build_children(new_graph, node, current_route)
+                    else:
+                        new_graph.routes[route_id].remove_station(node)
+                        self.check_solution(new_graph)
+                        current_route += 1
+                else:
+                    current_route -= 1
+
