@@ -1,4 +1,4 @@
-from code.classes import traject
+from code.classes import route
 import copy
 
 
@@ -10,23 +10,23 @@ class Greedy():
 
     Attributes:
     |graph: Graph with Nodes
-    |max_trajects: Int
+    |max_routes: Int
     |time_frame: Int (minutes)
 
     Methods:
-    |__init__(graph, max_trajects, time_frame): initialises the
+    |__init__(graph, max_routes, time_frame): initialises the
     |   algorithm variables by deepcopying the graph and storing
-    |   the traject and time limits.
+    |   the route and time limits.
     |get_next_station(current_station, *current_time): checks if current
     |   station has a connection and if time frame would be exceeded.
     |   Returns False if so. If not, returns the shortest connection.
     |run(): runs the greedy algorithm till no starting stations are left
-    |   or if the maximum amount of trajects is hit.
+    |   or if the maximum amount of routes is hit.
     """
-    def __init__(self, graph, max_trajects, time_frame):
-        """Requires a graph, max trajects number & time frame (mins)."""
+    def __init__(self, graph, max_routes, time_frame):
+        """Requires a graph, max routes number & time frame (mins)."""
         self.graph = copy.deepcopy(graph)
-        self.max_trajects = max_trajects
+        self.max_routes = max_routes
         self.time_frame = time_frame
 
     def get_next_station(self, current_station, current_time=0):
@@ -41,23 +41,24 @@ class Greedy():
             current_time + list(connections.values())[0][0] > self.time_frame):
             return False
 
-        return list(connections.keys())[0]
+        next_station = list(connections.keys())[0]
+        return self.graph.nodes[next_station]
 
     def run(self):
         """Runs greedy algorithm that chooses for shortest distances.
 
         First, the nodes are sorted by the amount of connections and
         their distances. After, the algorithm will run untill all
-        stations have covered connections or if max traject limit is
-        hit. A traject is started for a station and will be extended
+        stations have covered connections or if max route limit is
+        hit. A route is started for a station and will be extended
         till time frame is exceeded or no non-covered connections
         available for the next station.
         """
         nodes = list(self.graph.nodes.values())
-        traject_id = 1
+        route_id = 1
 
-        # Goes through the sorted nodes to start trajects.
-        while nodes and traject_id <= self.max_trajects:
+        # Goes through the sorted nodes to start routes.
+        while nodes and route_id <= self.max_routes:
             # Chooses starting station based on amount of unused connections.
             nodes.sort(key=lambda node: (node.get_n_unused_connections()))
             station = nodes[0]
@@ -66,15 +67,14 @@ class Greedy():
             if not self.get_next_station(station):
                 nodes.remove(station)
             else:
-                current_traject = traject.Traject(traject_id)
-                current_traject.add_station(station)
+                self.graph.add_route(route_id)
+                self.graph.add_station(station.city, route_id)
 
-                # Keeps extending traject if new connection is eligible.
+                # Keeps extending route if new connection is eligible.
                 while self.get_next_station(station,
-                    current_traject.get_traject_time()):
+                    self.graph.get_route_time(route_id)):
                     next_station = self.get_next_station(station)
-                    current_traject.add_station(next_station)
+                    self.graph.add_station(next_station.city, route_id)
                     station = next_station
 
-                traject_id += 1
-                self.graph.trajects.append(current_traject)
+                route_id += 1
