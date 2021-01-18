@@ -17,21 +17,15 @@ class Depth():
         self.counter = 0
 
     def get_next_state(self):
-        """
-        Method that gets the next state from the list of states.
-        """
+        """Method that gets the next state from the list of states."""
         return self.states.pop()
 
     def get_next_station(self, graph, route_id):
-        """
-        Method that returns the last added station.
-        """
+        """Method that returns the last added station."""
         return graph.routes[route_id].stations[-1]
 
     def new_route (self, graph, route_id):
-        """
-        Creates all possible child-states for a new route and adds them to the list of states.
-        """
+        """Creates all possible child-states for a new route and adds them to the list of states."""
         for station in self.stations:
             new_graph = copy.deepcopy(graph)
             new_graph.add_route(route_id + 1)
@@ -39,9 +33,7 @@ class Depth():
             self.states.append(new_graph)
 
     def build_children(self, graph, city, route_id):
-        """
-        Creates all possible child-states for a the last station and adds them to the list of states.
-        """
+        """Creates all possible child-states for a the last station and adds them to the list of states."""
         connections = graph.nodes[city].get_connections()
 
         for connection in connections:
@@ -50,9 +42,7 @@ class Depth():
             self.states.append(new_graph)
 
     def check_solution(self, graph):
-        """
-        Checks and accepts better solutions than the current solution.
-        """
+        """Checks and accepts better solutions than the current solution."""
         result = graph.get_result()
         if result > self.best_value:
             self.best_solution = graph
@@ -72,9 +62,7 @@ class Depth():
             return False
 
     def run(self):
-        """
-        Run the depth first search algorithm while making sure none of the requirements are violated.
-        """
+        """Run the depth first search algorithm while making sure none of the requirements are violated."""
         last_station = None
 
         while self.states:
