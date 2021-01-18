@@ -111,22 +111,40 @@ class Graph():
 
         return route_time
 
-    def get_connections_p_value(self):
-        """Returns p value that represents fraction of used connections."""
-        total_connections = 0
-        covered_connections = 0
-
-        # Goes through every station.
+    def driven_connections(self):
+        driven_connections = 0
         for node in self.nodes.values():
             connections = node.get_connections()
+            # Counts the total amount of connections driven.
+            for connection in connections.values():
+                driven_connections += connection[1]
 
+        return driven_connections
+
+    def total_connections(self):
+        total_connections = 0
+
+        for node in self.nodes.values():
+            total_connections += len(node.get_connections())
+
+        return total_connections
+
+    def covered_connections(self):
+        covered_connections = 0
+
+        for node in self.nodes.values():
+            connections = node.get_connections()
             # Counts all the covered connections of the station.
             for connection in connections.values():
-                total_connections += 1
                 if connection[1] > 0:
                     covered_connections += 1
 
-        p_value = (covered_connections / total_connections)
+        return covered_connections
+
+    def get_connections_p_value(self):
+        """Returns p value that represents fraction of used connections."""
+
+        p_value = (self.covered_connections() / self.total_connections())
 
         return p_value
 
