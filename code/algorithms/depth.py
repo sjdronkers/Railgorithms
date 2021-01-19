@@ -37,7 +37,8 @@ class Depth():
     def new_route (self, graph, route_id):
         """Creates all possible child-states for a new route and adds them to the list of states."""
         new_route = route_id + 1
-        rand_stations = random.sample(self.stations, len(self.stations))
+        # rand_stations = random.sample(self.stations, len(self.stations))
+        one_left_stations = self.pruning(6, graph, new_route)
         # rand_ones = random.sample(self.one_connection_stations, len(self.one_connection_stations))
 
         # (prune) first station start with only one connection
@@ -46,8 +47,14 @@ class Depth():
             new_graph.add_route(new_route)
             new_graph.add_station(self.one_connection_stations.pop(), new_route)
             self.states.append(new_graph)
+        elif one_left_stations:
+            for station in one_left_stations:
+                new_graph = copy.deepcopy(graph)
+                new_graph.add_route(new_route)
+                new_graph.add_station(station, new_route)
+                self.states.append(new_graph)
         else:
-            for station in rand_stations:
+            for station in self.stations:
                 new_graph = copy.deepcopy(graph)
                 new_graph.add_route(new_route)
                 new_graph.add_station(station, new_route)
@@ -111,6 +118,12 @@ class Depth():
             if n_driven_connections > (covered_connections * 1.2):
                 return True
             return False
+        elif prune_type == 6:
+            one_left_stations = []
+            for station in graph.nodes:
+                if graph.nodes[station].get_n_unused_connections() == 1:
+                    one_left_stations.append(station)
+            return one_left_stations
         else:
             return False
 
