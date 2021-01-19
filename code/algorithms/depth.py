@@ -63,14 +63,24 @@ class Depth():
     def build_children(self, graph, city, route_id):
         """Creates all possible child-states for a the last station and adds them to the list of states."""
         connections = graph.nodes[city].get_connections()
+        unused_connections = self.pruning(7, graph, route_id, city)
 
-        for connection in connections:
-            new_connection = (city, connection)
-            if self.pruning(3, graph, route_id, new_connection):
-                if self.pruning(4, graph, route_id, connection):
-                    new_graph = copy.deepcopy(graph)
-                    new_graph.add_station(connection, route_id)
-                    self.states.append(new_graph)
+        if unused_connections:
+            for connection in unused_connections:
+                new_connection = (city, connection)
+                if self.pruning(3, graph, route_id, new_connection):
+                    if self.pruning(4, graph, route_id, connection):
+                        new_graph = copy.deepcopy(graph)
+                        new_graph.add_station(connection, route_id)
+                        self.states.append(new_graph)
+        else:
+            for connection in connections:
+                new_connection = (city, connection)
+                if self.pruning(3, graph, route_id, new_connection):
+                    if self.pruning(4, graph, route_id, connection):
+                        new_graph = copy.deepcopy(graph)
+                        new_graph.add_station(connection, route_id)
+                        self.states.append(new_graph)
 
     def check_solution(self, graph):
         """Checks and accepts better solutions than the current solution."""
@@ -78,7 +88,7 @@ class Depth():
         if result > self.best_value:
             self.best_solution = graph
             self.best_value = result
-            print(f"New best value: {self.best_value}")
+            print(f"New best value: {self.best_value} states: {len(self.states)}")
 
     def pruning(self, prune_type, graph, route_id, city=None):
         """
@@ -89,7 +99,8 @@ class Depth():
         type 2: The first few routes start at an one connection station
         type 3: Routes never retake a connection.
         type 4: Routes never retake the last connection.
-        type 5: Prunes where a certain amount of connections are driven
+        type 5: Prunes where a certain amount of connections are driven.
+        type 6: Returns a list of stations that only have one unused connection left.
         """
         if prune_type == 1:
             if route_id > 1 and (graph.get_result() < (10000 * ((route_id - 1) / self.max_routes) - (100 * (route_id - 1) + (self.time_frame) * (route_id - 1)))):
@@ -124,8 +135,16 @@ class Depth():
                 if graph.nodes[station].get_n_unused_connections() == 1:
                     one_left_stations.append(station)
             return one_left_stations
+        elif prune_type == 7:
+            unused_connections = []
+            connections = graph.nodes[city].get_connections()
+            for connection in connections:
+                if connections[connection][1] == 0:
+                    unused_connections.append(connection)
+            return unused_connections
         else:
             return False
+
 
     def run(self):
         """Run the depth first search algorithm while making sure none of the requirements are violated."""
@@ -155,6 +174,7 @@ class Depth():
                             self.check_solution(new_graph)
                             last_station = self.get_next_station(new_graph, current_route)
                             self.build_children(new_graph, last_station, current_route)
+
                     # if violated remove last station and start with new route
                     else:
                         last_station = self.get_next_station(new_graph, current_route)
