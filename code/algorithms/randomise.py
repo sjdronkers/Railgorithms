@@ -34,7 +34,12 @@ class Randomise():
     def rand_next_station(self, current_station, current_time=0):
         """Returns a random station if time frame is not exceeded."""
         connections = current_station.get_connections()
+        connections = dict(filter(lambda elem: elem[1][1] == False,
+                        connections.items()))
         connection_list = list(connections.keys())
+
+        if not connections:
+            return False
 
         # Retrieves a random connection.
         random_number = randint(0, len(connection_list) - 1)

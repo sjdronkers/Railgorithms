@@ -35,6 +35,8 @@ class HillClimber:
         self.score = graph.get_result()
         self.scores = []
 
+        self.counter = 0
+
         self.max_routes = max_routes
         self.time_frame = time_frame
 
@@ -42,20 +44,29 @@ class HillClimber:
         """Randomly picks a route and tries to add a connection."""
         random_route_id = random.choice(list(new_graph.routes.keys()))
         random_route = new_graph.routes[random_route_id]
-
-        # Returns the second to last stop and removes last stop.
         route_stations = random_route.get_stations()
-        if len(route_stations) > 1:
-            last_city = random_route.remove_station(route_stations[-1])[1]
+
+        if self.counter > 50:
+            if len(route_stations) > 1:
+                for _ in range(len(route_stations) - 1):
+                    new_graph.remove_station(route_stations[-1], random_route_id)
+
+            del new_graph.routes[random_route_id]
+
         else:
+            # Returns the second to last stop and removes last stop.
+            if len(route_stations) > 1:
+                new_graph.remove_station(route_stations[-1], random_route_id)
+
+            route_stations = random_route.get_stations()
             last_city = route_stations[-1]
 
-        last_station = new_graph.nodes[last_city]
-        current_time = new_graph.get_route_time(random_route_id)
-        next_station = Greedy.get_next_station(self, last_station, current_time)
+            last_station = new_graph.nodes[last_city]
+            current_time = new_graph.get_route_time(random_route_id)
+            next_station = Randomise.rand_next_station(self, last_station, current_time)
 
-        if next_station:
-            random_route.add_station(next_station.city)
+            if next_station:
+                new_graph.add_station(next_station.city, random_route_id)
 
     def mutate_graph(self, new_graph):
         """Mutates the graph by editing a single route of the graph."""
@@ -68,6 +79,7 @@ class HillClimber:
 
         # Overwrites the current graph if new one is a better solution.
         if new_score > self.score:
+            self.counter = 0
             self.graph = new_graph
             self.score = new_score
 
@@ -83,4 +95,7 @@ class HillClimber:
 
             self.mutate_graph(new_graph)
 
+            self.counter += 1
+
             self.check_solution(new_graph)
+
