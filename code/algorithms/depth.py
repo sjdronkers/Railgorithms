@@ -37,7 +37,7 @@ class Depth():
     def new_route (self, graph, route_id):
         """Creates all possible child-states for a new route and adds them to the list of states."""
         new_route = route_id + 1
-        # rand_stations = random.sample(self.stations, len(self.stations))
+        rand_stations = random.sample(self.stations, len(self.stations))
         # rand_ones = random.sample(self.one_connection_stations, len(self.one_connection_stations))
 
         # (prune) first station start with only one connection
@@ -47,11 +47,10 @@ class Depth():
             new_graph.add_station(self.one_connection_stations.pop(), new_route)
             self.states.append(new_graph)
         else:
-            for station in self.stations:
+            for station in rand_stations:
                 new_graph = copy.deepcopy(graph)
                 new_graph.add_route(new_route)
                 new_graph.add_station(station, new_route)
-                if
                 self.states.append(new_graph)
 
     def build_children(self, graph, city, route_id):
@@ -109,7 +108,7 @@ class Depth():
         elif prune_type == 5:
             n_driven_connections = graph.driven_connections()
             covered_connections = graph.covered_connections()
-            if n_driven_connections > (covered_connections * 1.5):
+            if n_driven_connections > (covered_connections * 1.2):
                 return True
             return False
         else:
@@ -145,6 +144,7 @@ class Depth():
                             self.build_children(new_graph, last_station, current_route)
                     # if violated remove last station and start with new route
                     else:
+                        last_station = self.get_next_station(new_graph, current_route)
                         new_graph.remove_station(last_station, current_route)
                         self.check_solution(new_graph)
                         self.new_route(new_graph, current_route)
@@ -154,9 +154,4 @@ class Depth():
 
         except KeyboardInterrupt:
             self.graph = self.best_solution
-            for route in self.graph.routes:
-                print(self.graph.get_route_time(route))
             print(" Ctrl-C pressed to terminate depth.py while statement")
-
-            pass
-
