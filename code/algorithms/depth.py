@@ -90,7 +90,7 @@ class Depth():
             return False
         elif prune_type == 2:
             length = len(self.one_connection_stations)
-            if (route_id == 1 or route_id == 2 or route_id == 3) and length > 0:
+            if length > 0:
                 return True
             return False
         elif prune_type == 3:
