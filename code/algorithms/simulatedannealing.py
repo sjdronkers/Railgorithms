@@ -2,14 +2,14 @@ import random
 import math
 import copy
 
-class Simulated_annealing():
+from .hillclimber import HillClimber
+
+class Simulated_annealing(HillClimber):
     """ 
     Builds upon a pre-made graph by randomly trying route changes.
 
     Attributes:
-    |graph:
-    |score: Int, score of the graph
-    |scores: [score]
+    |graph: Graph with Nodes
     |max_routes: Int
     |time_frame: Int
     |temp: temperature
@@ -17,24 +17,14 @@ class Simulated_annealing():
 
     Methods:
     |__init__(): init
-    |linear_update():
-    |exponential_update():
-    |check_solution():
-    |run(iterations):
+    |linear_update(): updates the temperature using a linear cooldown
+    |   scheme.
+    |exponential_update(): updates temperature using an exponential
+    |   cooldown scheme.
+    |check_solution(new_graph): checks if the new graph is accepted.
     """
-    def __init__(self, graph, max_routes, time_frame, temperature=1, linear=True):
-        if graph.get_result() == 0:
-            raise Exception("Simulated annealing requires a solution")
-
-        # Initialize a graph with the first score
-        self.graph = copy.deepcopy(graph)
-        self.score = graph.get_result()
-        self.scores = []
-
-        self.counter = 0
-
-        self.max_routes = max_routes
-        self.time_frame = time_frame
+    def __init__(self, graph, max_routes, time_frame, temperature=1, linear=False):
+        super().__init__(graph, max_routes, time_frame)
 
         # Starting and current temperature
         self.temp_0 = temperature
@@ -44,8 +34,10 @@ class Simulated_annealing():
         self.linear = linear
         if self.linear:
             self.update_temperature = self.linear_update
+            print("linear cooling scheme")
         else:
             self.update_temperature = self.exponential_update
+            print("exponential cooling scheme")
 
     def linear_update(self):
         """
@@ -76,17 +68,5 @@ class Simulated_annealing():
             self.score = new_score
         
         self.update_temperature()
+        print(self.temp)
 
-    def run(self, iterations):
-        """
-        Runs simulated annealing algorithm
-        """
-        self.iterations = iterations
-      
-        for iteration in range(iterations):
-            print(f"{iteration}")
-            new_graph = copy.deepcopy(self.graph)
-
-            # self.mutate_graph(new_graph, ...)
-
-            self.check_solution(new_graph)
