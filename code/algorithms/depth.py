@@ -63,6 +63,7 @@ class Depth():
     def build_children(self, graph, city, route_id):
         """Creates all possible child-states for a the last station and adds them to the list of states."""
         connections = graph.nodes[city].get_connections()
+        # rand_connections = random.sample(connections.keys(), len(connections.keys()))
         unused_connections = self.pruning(7, graph, route_id, city)
 
         if unused_connections:
@@ -101,6 +102,7 @@ class Depth():
         type 4: Routes never retake the last connection.
         type 5: Prunes where a certain amount of connections are driven.
         type 6: Returns a list of stations that only have one unused connection left.
+        type 7: Returns a list of connections that haven't been used yet.
         """
         if prune_type == 1:
             if route_id > 1 and (graph.get_result() < (10000 * ((route_id - 1) / self.max_routes) - (100 * (route_id - 1) + (self.time_frame) * (route_id - 1)))):
