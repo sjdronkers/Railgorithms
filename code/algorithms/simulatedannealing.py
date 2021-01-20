@@ -16,7 +16,7 @@ class Simulated_annealing():
     |temp_0: initial temperature
 
     Methods:
-    |__init__():
+    |__init__(): init
     |linear_update():
     |exponential_update():
     |check_solution():
