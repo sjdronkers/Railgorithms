@@ -3,12 +3,41 @@ import random
 import math
 
 class Depth():
-    def __init__(self, graph, max_routes, time_frame):
+    """
+    Builds upon a pre-made graph by randomly trying route changes.
+
+    Attributes:
+    |graph: Graph
+    |max_routes: Int
+    |time_frame: Int
+    |stations: []
+    |one_connection_stations
+    |states: []
+    |best_solution: Graph
+    |best_value: Int
+    |counter: Int
+
+    Methods:
+    |__init__(self, graph, max_routes, time_frame): init
+    |load_one_connection_stations(self):
+    |get_next_state(self):
+    |get_next_station(self, graph, route_id):
+    |new_route (self, graph, route_id):
+    |build_children(self, graph, city, route_id):
+    |check_solution(self, graph):
+    |pruning(self, prune_type, graph, route_id, city=None):
+    |run(self):
+
+    """
+    def __init__(self, graph, max_routes, time_frame, random=False):
         """Requires a graph, max routes number & time frame (mins)."""
         self.graph = copy.deepcopy(graph)
         self.max_routes = max_routes
         self.time_frame = time_frame
         self.stations = self.graph.nodes.keys()
+
+        self.random = random
+
         self.one_connection_stations = self.load_one_connection_stations()
 
 
@@ -37,8 +66,13 @@ class Depth():
     def new_route (self, graph, route_id):
         """Creates all possible child-states for a new route and adds them to the list of states."""
         new_route = route_id + 1
-        # rand_stations = random.sample(self.stations, len(self.stations))
+
+        stations = self.stations
         one_left_stations = self.pruning(6, graph, new_route)
+
+        if self.random == True:
+            stations = random.sample(self.stations, len(self.stations))
+            one_left_stations = random.sample(one_left_stations, len(one_left_stations))
         # rand_ones = random.sample(self.one_connection_stations, len(self.one_connection_stations))
 
         # (prune) first station start with only one connection
@@ -54,7 +88,7 @@ class Depth():
                 new_graph.add_station(station, new_route)
                 self.states.append(new_graph)
         else:
-            for station in self.stations:
+            for station in stations:
                 new_graph = copy.deepcopy(graph)
                 new_graph.add_route(new_route)
                 new_graph.add_station(station, new_route)
@@ -65,6 +99,10 @@ class Depth():
         connections = graph.nodes[city].get_connections()
         # rand_connections = random.sample(connections.keys(), len(connections.keys()))
         unused_connections = self.pruning(7, graph, route_id, city)
+
+        if self.random == True:
+            connections = random.sample(connections.keys(), len(connections))
+            unused_connections = random.sample(unused_connections, len(unused_connections))
 
         if unused_connections:
             for connection in unused_connections:
@@ -89,7 +127,7 @@ class Depth():
         if result > self.best_value:
             self.best_solution = graph
             self.best_value = result
-            print(f"New best value: {self.best_value} states: {len(self.states)}")
+            print(f"New best value: {self.best_value} states: {len(self.states)} counter: {self.counter}")
 
     def pruning(self, prune_type, graph, route_id, city=None):
         """
