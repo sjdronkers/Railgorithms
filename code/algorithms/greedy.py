@@ -1,4 +1,5 @@
 from code.classes import route
+from random import randint
 import copy
 
 
@@ -78,3 +79,23 @@ class Greedy():
                     station = next_station
 
                 route_id += 1
+
+
+class RandomGreedy(Greedy):
+    """Randomly assigns connections with Greedy as fundamental.
+
+    Methods:
+    |get_next_station(current_station, *current_time): returns a
+    |   random station regardless if connection is covered or not.
+    """
+    def get_next_station(self, current_station, current_time=0):
+        """Gets a random legitimate connection."""
+        random_number = randint(0, len(connection_list) - 1)
+        random_connection = connection_list[random_number]
+
+        # Checks if no uncovered connections or if time frame exceeded.
+        if (current_time + connections[random_connection][0] > self.time_frame):
+            return False
+
+        next_station = list(connections.keys())[0]
+        return self.graph.nodes[next_station]
