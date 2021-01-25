@@ -52,9 +52,10 @@ class HillClimber:
                     new_graph.remove_station(route_stations[-1], random_route_id)
 
             del new_graph.routes[random_route_id]
+            self.counter = 0
 
         else:
-            # Returns the second to last stop and removes last stop.
+            """# Returns the second to last stop and removes last stop.
             if len(route_stations) > 1:
                 new_graph.remove_station(route_stations[-1], random_route_id)
 
@@ -66,7 +67,42 @@ class HillClimber:
             next_station = Randomise.rand_next_station(self, last_station, current_time)
 
             if next_station:
-                new_graph.add_station(next_station.city, random_route_id)
+                new_graph.add_station(next_station.city, random_route_id)"""
+            # Randomly returns the second (to last) stop and removes first/last stop.
+            first_or_last = random.randint(0,1)
+
+            if len(route_stations) > 1:
+                if first_or_last == 0:
+                    new_graph.remove_station(route_stations[-1], random_route_id)
+                else:
+                    new_graph.remove_station(route_stations[0], random_route_id)
+                    print('yesss')
+
+            # Randomly adds a station or leaves state as is.
+            add_or_leave = random.randint(0,1)
+
+            if add_or_leave == 0:
+                route_stations = random_route.get_stations()
+                if first_or_last == 0:
+                    # return last city
+                    city = route_stations[-1]
+                else:
+                    # return first city
+                    city = route_stations[0]
+
+                last_station = new_graph.nodes[city]
+                current_time = new_graph.get_route_time(random_route_id)
+                next_station = Randomise.rand_next_station(self, last_station, current_time)
+
+                if next_station:
+                    if first_or_last == 0:
+                        # add last station
+                        new_graph.add_station(next_station.city, random_route_id)
+                    else:
+                        # add first station
+                        new_graph.add_station(next_station.city, random_route_id, False)
+
+
 
     def mutate_graph(self, new_graph):
         """Mutates the graph by editing a single route of the graph."""
@@ -79,7 +115,6 @@ class HillClimber:
 
         # Overwrites the current graph if new one is a better solution.
         if new_score > self.score:
-            self.counter = 0
             self.graph = new_graph
             self.score = new_score
 

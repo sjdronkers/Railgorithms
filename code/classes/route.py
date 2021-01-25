@@ -23,17 +23,24 @@ class Route():
         self.route_id = uid
         self.stations = []
 
-    def add_station(self, city):
+    def add_station(self, city, first=True):
         """
         Adds a station to the route and marks connection as used in this route.
 
         When a station is added, the connection is set + 1 for
         both directions.
         """
-        self.stations.append(city)
-        if len(self.stations) > 1:
-            return [city, self.stations[-2]]
-        return False
+        if first == True:
+            self.stations.append(city)
+            if len(self.stations) > 1:
+                return [city, self.stations[-2]]
+            return False
+        else:
+            # add station to start of list
+            self.stations.insert(0, city)
+            if len(self.stations) > 1:
+                return [city, self.stations[1]]
+            return False
 
     def get_stations(self):
         """

@@ -60,9 +60,9 @@ class Graph():
         route = Route(route_id)
         self.routes[route_id] = route
 
-    def add_station(self, city, route_id):
+    def add_station(self, city, route_id, first=True):
         route = self.routes[route_id]
-        cities = route.add_station(city)
+        cities = route.add_station(city, first)
         if cities != False:
             self.connection_change(cities)
 
