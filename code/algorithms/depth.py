@@ -29,7 +29,7 @@ class Depth():
     |run(self):
 
     """
-    def __init__(self, graph, max_routes, time_frame, random=True):
+    def __init__(self, graph, max_routes, time_frame, random=False):
         """Requires a graph, max routes number & time frame (mins)."""
         self.graph = copy.deepcopy(graph)
         self.max_routes = max_routes

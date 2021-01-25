@@ -55,19 +55,6 @@ class HillClimber:
             self.counter = 0
 
         else:
-            """# Returns the second to last stop and removes last stop.
-            if len(route_stations) > 1:
-                new_graph.remove_station(route_stations[-1], random_route_id)
-
-            route_stations = random_route.get_stations()
-            last_city = route_stations[-1]
-
-            last_station = new_graph.nodes[last_city]
-            current_time = new_graph.get_route_time(random_route_id)
-            next_station = Randomise.rand_next_station(self, last_station, current_time)
-
-            if next_station:
-                new_graph.add_station(next_station.city, random_route_id)"""
             # Randomly returns the second (to last) stop and removes first/last stop.
             first_or_last = random.randint(0,1)
 
@@ -76,7 +63,6 @@ class HillClimber:
                     new_graph.remove_station(route_stations[-1], random_route_id)
                 else:
                     new_graph.remove_station(route_stations[0], random_route_id)
-                    print('yesss')
 
             # Randomly adds a station or leaves state as is.
             add_or_leave = random.randint(0,1)
