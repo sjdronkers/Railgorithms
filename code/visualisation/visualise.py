@@ -2,24 +2,22 @@
 # Credit to GitHub user Phyla for adjustText library: https://github.com/Phlya/adjustText (10.5281/zenodo.3924114)
 
 from adjustText import adjust_text
-from matplotlib.pyplot import cm
-import numpy as np
-import pandas as pd
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 def visualise(graph, want_anim):
     """ Plots the stations and routes on a basemap of NL.
 
-    First, a blue scatter plot is made with the coords of all stations.
-    Second, all station connections are plotted with a black line.
-    Third, all routes are drawn with a unique colour. The starting
-        station is labeled with a coloured number.
-    Fourth, the coloured number are adjusted with the 'adjustText'
-        library to avoid overlap between station numbers.
+    First, a back scatter plot is made with the coords of all stations.
+    Second, all connections are plotted with a black line.
+    Third, if animation is chosen, every route is sequentially plotted
+        with a unique colour. Else, a static map with a unique colour
+        for every route is plotted.
+    Fourth, the route numbers' positions are adjusted with the
+        'adjustText' library to avoid overlap between station numbers.
     """
-    # matplotlib.use('WebAgg')
-
     stations = graph.nodes.values()
     x_coords = [station.get_coordinates()[0] for station in stations]
     y_coords = [station.get_coordinates()[1] for station in stations]
@@ -140,7 +138,5 @@ def visualise(graph, want_anim):
 
     # Adjusts the station numbers to avoid overlap.
     adjust_text(texts)
-
-    # plt.show()
 
     plt.savefig('results/static_railmap.png')

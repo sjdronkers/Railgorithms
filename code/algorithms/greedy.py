@@ -1,6 +1,7 @@
-from code.classes import route
-from random import randint
 import copy
+from random import randint
+
+from code.classes import route
 
 
 class Greedy():
@@ -32,12 +33,12 @@ class Greedy():
 
     def get_next_station(self, current_station, current_time=0):
         """Returns the station with the shortest distance."""
-        connections = current_station.get_connections()
         # Filters out the covered connections.
+        connections = current_station.get_connections()
         connections = dict(filter(lambda elem: elem[1][1] == False,
                                 connections.items()))
 
-        # Check if no uncovered connections or if time frame exceeded.
+        # Checks if no uncovered connections or if time frame exceeded.
         if (not connections or
             current_time + list(connections.values())[0][0] > self.time_frame):
             return False
@@ -90,6 +91,9 @@ class RandomGreedy(Greedy):
     """
     def get_next_station(self, current_station, current_time=0):
         """Gets a random legitimate connection."""
+        connections = current_station.get_connections()
+        connection_list = list(connections.keys())
+
         random_number = randint(0, len(connection_list) - 1)
         random_connection = connection_list[random_number]
 

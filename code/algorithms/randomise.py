@@ -1,11 +1,11 @@
-from code.classes import route
+import copy
 from random import randint
 
-import copy
+from code.classes import route
+
 
 class Randomise():
-    """
-    Represents a random algorithm, everything is chosen at random.
+    """Represents a random algorithm, everything is chosen at random.
 
     Attributes:
     |graph: Graph with Nodes
@@ -57,27 +57,22 @@ class Randomise():
         nodes = list(self.graph.nodes.values())
         route_id = 1
 
-        while nodes and route_id <= self.max_routes:
-
+        while route_id <= self.max_routes:
             station = self.get_rand_station(nodes)
 
-            # Checks if any station can be reached at all.
-            if not self.rand_next_station(station):
-                nodes.remove(station)
-            else:
-                self.graph.add_route(route_id)
-                self.graph.add_station(station.city, route_id)
+            self.graph.add_route(route_id)
+            self.graph.add_station(station.city, route_id)
 
-                # Keeps randomly extending route till no station available.
-                while True:
-                    pot_station = self.rand_next_station(station,
-                        self.graph.get_route_time(route_id))
+            # Keeps randomly extending route till no station available.
+            while True:
+                pot_station = self.rand_next_station(station,
+                    self.graph.get_route_time(route_id))
 
-                    # Stops extending route if no more possible station.
-                    if not pot_station:
-                        break
+                # Stops extending route if no more possible station.
+                if not pot_station:
+                    break
 
-                    self.graph.add_station(pot_station.city, route_id)
-                    station = pot_station
+                self.graph.add_station(pot_station.city, route_id)
+                station = pot_station
 
-                route_id += 1
+            route_id += 1

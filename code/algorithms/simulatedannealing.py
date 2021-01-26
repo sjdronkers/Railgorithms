@@ -1,12 +1,12 @@
-import random
-import math
 import copy
+import math
+import random
 
 from .hillclimber import HillClimber
 
-class Simulated_annealing(HillClimber):
-    """ 
-    Builds upon a pre-made graph by randomly trying route changes.
+
+class SimulatedAnnealing(HillClimber):
+    """Builds upon a pre-made graph by randomly trying route changes.
 
     Attributes:
     |graph: Graph with Nodes
@@ -26,7 +26,7 @@ class Simulated_annealing(HillClimber):
     def __init__(self, graph, max_routes, time_frame, temperature=1, linear=False):
         super().__init__(graph, max_routes, time_frame)
 
-        # Starting and current temperature
+        # Starting and current temperature.
         self.temp_0 = temperature
         self.temp = temperature
 
@@ -40,33 +40,26 @@ class Simulated_annealing(HillClimber):
             print("exponential cooling scheme")
 
     def linear_update(self):
-        """
-        This function implements a linear cooling scheme.
-        """
+        """Implements a linear cooling scheme."""
         self.temp = self.temp - (self.temp_0 / self.iterations)
 
     def exponential_update(self):
-        """
-        This function implements a exponential cooling scheme.
-        """
+        """Implements a exponential cooling scheme."""
         alpha = 0.99
         self.temp = self.temp * alpha
 
     def check_solution(self, new_graph):
-        """
-        Check if the new solution is better
-        """
+        """Checks if the new solution is better"""
         new_score = new_graph.get_result()
         old_score = self.score
 
-        # Calculate the probability of accepting this new graph
+        # Calculates the probability of accepting this new graph.
         delta = old_score - new_score
         prob = math.exp(-delta/self.temp)
 
         if random.random() < prob:
             self.graph = new_graph
             self.score = new_score
-        
+
         self.update_temperature()
         print(self.temp)
-

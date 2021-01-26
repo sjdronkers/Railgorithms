@@ -1,7 +1,6 @@
 import copy
 import random
 
-from .greedy import Greedy
 from .randomise import Randomise
 
 
@@ -87,8 +86,6 @@ class HillClimber:
                     else:
                         # add first station
                         new_graph.add_station(next_station.city, random_route_id, False)
-
-
 
     def mutate_graph(self, new_graph):
         """Mutates the graph by editing a single route of the graph."""
