@@ -62,4 +62,3 @@ class SimulatedAnnealing(HillClimber):
             self.score = new_score
 
         self.update_temperature()
-        print(self.temp)

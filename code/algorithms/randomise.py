@@ -41,7 +41,10 @@ class Randomise():
         random_connection = connection_list[random_number]
 
         # Checks if no uncovered connections or if time frame exceeded.
-        if (current_time + connections[random_connection][0] > self.time_frame):
+        connection_time = connections[random_connection][0]
+        exceeded = current_time + connection_time > self.time_frame
+
+        if exceeded:
             return False
 
         # Returns random connection of this station.
@@ -65,7 +68,8 @@ class Randomise():
 
             # Keeps randomly extending route till no station available.
             while True:
-                pot_station = self.rand_next_station(station,
+                pot_station = self.rand_next_station(
+                    station,
                     self.graph.get_route_time(route_id))
 
                 # Stops extending route if no more possible station.

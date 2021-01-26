@@ -39,8 +39,10 @@ class Greedy():
                                 connections.items()))
 
         # Checks if no uncovered connections or if time frame exceeded.
-        if (not connections or
-            current_time + list(connections.values())[0][0] > self.time_frame):
+        connection_time = list(connections.values())[0][0]
+        exceeded = current_time + connection_time > self.time_frame
+
+        if not connections or exceeded:
             return False
 
         next_station = list(connections.keys())[0]
@@ -73,8 +75,9 @@ class Greedy():
                 self.graph.add_station(station.city, route_id)
 
                 # Keeps extending route if new connection is eligible.
-                while self.get_next_station(station,
-                    self.graph.get_route_time(route_id)):
+                while self.get_next_station(
+                        station,
+                        self.graph.get_route_time(route_id)):
                     next_station = self.get_next_station(station)
                     self.graph.add_station(next_station.city, route_id)
                     station = next_station
@@ -98,7 +101,10 @@ class RandomGreedy(Greedy):
         random_connection = connection_list[random_number]
 
         # Checks if no uncovered connections or if time frame exceeded.
-        if (current_time + connections[random_connection][0] > self.time_frame):
+        connection_time = connections[random_connection][0]
+        exceeded = current_time + connection_time > self.time_frame
+
+        if exceeded:
             return False
 
         next_station = list(connections.keys())[0]

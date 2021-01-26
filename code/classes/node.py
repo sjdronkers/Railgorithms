@@ -2,24 +2,24 @@ class Node():
     """Represents a station as a node.
 
     Represents a station with a city name, unique id, connections &
-    coordinates. Can add a connection or return its connections or
-    coordinates.
+    coordinates. Can add a connection or return its connections,
+    coordinates or amount of uncovered connections.
 
     Attributes:
     |city: String of city name
     |id: Int
-    |connections: {Node: [time, bool]}
+    |connections: {city: [time, Int]}
     |x_coordinate: Float
     |y_coordinate: Float
 
     Methods:
     |__init__(city, uid, x_coord, y_coord): initialises a station with
     |   a city name, unique id, and x & y coordinates.
-    |add_connection(Node, time): adds a connection to the dict with
-    |   the Node as a key and the value as a list with time and a bool
-    |   to track if the connection has been covered or not.
-    |get_connections(): returns {Node: [time, bool]}
+    |add_connection(city, time): adds a connection to the dict with the
+    |   city as key and the time and amount of uses in a list as a value.
+    |get_connections(): returns {city: [time, Int]}
     |get_coordinates(): returns (x_coord, y_coord)
+    |get_n_unused_connections(): returns amount of uncovered connections.
     """
     def __init__(self, city, uid, x_coordinate, y_coordinate):
         """Requires city name, unique id, x coord, and y coord."""

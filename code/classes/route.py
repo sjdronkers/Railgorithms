@@ -1,59 +1,52 @@
 class Route():
-    """
-    Represents a route with a unique id & station objects.
+    """Represents a route with a unique id & city names.
 
-    Represents a route by storing stations in a list. Can
-    calculate the totl time of the route. Init requires an id as
-    an int to number the route.
+    Represents a route by adding or removing city names of stations.
+    When a city is added or removed, the connection's use counter is
+    updated accordingly.
 
     Attributes:
     |route_id: Int
-    |stations: [Node]
+    |stations: [cities]
 
     Methods:
     |__init__(uid): initialises a route with a unique id, no stations.
-    |add_station(Node): adds station to the route & marks connection.
-    |get_stations(): returns a list of Node objects in the route.
-    |get_route_time(): returns total time of all route connections.
+    |add_station(city, *first): adds station to the route & marks connection
+    |   as covered by increasing connection counter by 1.
+    |remove_station(city): removes connection from route & decreases
+    |   connection counter by 1 to undo cover.
+    |get_stations(): returns a list of city names in the route..
     """
     def __init__(self, uid):
-        """
-        Requires id.
-        """
+        """Requires id."""
         self.route_id = uid
         self.stations = []
 
     def add_station(self, city, first=True):
-        """
-        Adds a station to the route and marks connection as used in this route.
+        """Adds a station to the route and marks connection as covered.
 
-        When a station is added, the connection is set + 1 for
-        both directions.
+        When a station is added, the connection counter is increased
+        both directions to indicate use of the connection.
         """
+        # Adds station to start or end of the route.
         if first == True:
             self.stations.append(city)
             if len(self.stations) > 1:
                 return [city, self.stations[-2]]
+
             return False
         else:
-            # add station to start of list
             self.stations.insert(0, city)
             if len(self.stations) > 1:
                 return [city, self.stations[1]]
+
             return False
 
-    def get_stations(self):
-        """
-        Returns a list of the station objects in the route.
-        """
-        return self.stations
-
     def remove_station(self, city):
-        """
-        Removes a (first or last) station to the route and marks connection as unused for this route.
+        """Removes first or last station and undoes connection cover.
 
-        When a station is removed, the connection is set - 1 for
-        both directions.
+        When a station is removed, the connection the counter is
+        decreased by 1 for both directions.
         """
         if city == self.stations[-1]:
             return [self.stations.pop(-1), self.stations[-1]]
@@ -61,3 +54,7 @@ class Route():
             return [self.stations.pop(0), self.stations[0]]
         else:
             return False
+
+    def get_stations(self):
+        """Returns a list of the station objects in the route."""
+        return self.stations

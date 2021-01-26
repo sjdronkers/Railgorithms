@@ -83,7 +83,7 @@ def visualise(graph, want_anim):
         return lines
 
     def animate(i, line_count, total_frames):
-        """Draws routes sequentially with unique colours.'"""
+        """Draws routes sequentially with unique colours."""
         print(f"Animation Progress: {round(i/total_frames * 100)}%")
 
         # Resets route data for new route or adds to current route.
@@ -99,7 +99,7 @@ def visualise(graph, want_anim):
         if len(xdata) == 1:
             # Labels the first station of a route.
             texts.append(ax.text(xdata[0], ydata[0], f'{line_count[0] + 1}',
-                        c=f'{lines[line_count[0]].get_color()}', fontsize=10))
+                         c=f'{lines[line_count[0]].get_color()}', fontsize=10))
 
         # Prevents last frame from crashing.
         if line_count[0] < len(lines):
@@ -110,12 +110,17 @@ def visualise(graph, want_anim):
     # Creates an animation or static map depending on given choice.
     if want_anim:
         anim = animation.FuncAnimation(fig, animate,
-                                        fargs = [line_count, len(coords)],
-                                        init_func=init, frames=len(coords),
-                                        interval=400, blit=True)
+                                       fargs = [line_count, len(coords)],
+                                       init_func=init, frames=len(coords),
+                                       interval=400, blit=True)
 
         anim.save('results/dynamic_railmap.gif')
-        print("Animation successfully saved to results/dynamic_railmap.gif!")
+
+        color_begin = "\033[92m"
+        color_end = "\033[0m"
+        print(color_begin
+              + "Animation successfully saved to results/dynamic_railmap.gif!"
+              + color_end)
     else:
         # Plots a line for each route with a unique colour and label.
         route_number = -1
@@ -133,8 +138,8 @@ def visualise(graph, want_anim):
 
                 # Labels the next route.
                 texts.append(ax.text(coords[i + 1][1], coords[i + 1][0],
-                            f'{route_number + 1}', c=f'C{route_number}',
-                            fontsize=10))
+                             f'{route_number + 1}', c=f'C{route_number}',
+                             fontsize=10))
 
     # Adjusts the station numbers to avoid overlap.
     adjust_text(texts)

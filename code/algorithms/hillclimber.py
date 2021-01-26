@@ -48,44 +48,45 @@ class HillClimber:
         if self.counter > 50:
             if len(route_stations) > 1:
                 for _ in range(len(route_stations) - 1):
-                    new_graph.remove_station(route_stations[-1], random_route_id)
+                    new_graph.remove_station(route_stations[-1],
+                                             random_route_id)
 
             del new_graph.routes[random_route_id]
             self.counter = 0
-
         else:
-            # Randomly returns the second (to last) stop and removes first/last stop.
-            first_or_last = random.randint(0,1)
-
+            # Randomly removes first/last connection of the route.
+            first_or_last = random.randint(0, 1)
             if len(route_stations) > 1:
                 if first_or_last == 0:
-                    new_graph.remove_station(route_stations[-1], random_route_id)
+                    new_graph.remove_station(route_stations[-1],
+                                             random_route_id)
                 else:
-                    new_graph.remove_station(route_stations[0], random_route_id)
+                    new_graph.remove_station(route_stations[0],
+                                             random_route_id)
 
-            # Randomly adds a station or leaves state as is.
+            # Randomly adds a connection or leaves state as is.
             add_or_leave = random.randint(0,1)
-
             if add_or_leave == 0:
                 route_stations = random_route.get_stations()
+                # Returns either first or last city of route.
                 if first_or_last == 0:
-                    # return last city
                     city = route_stations[-1]
                 else:
-                    # return first city
                     city = route_stations[0]
 
                 last_station = new_graph.nodes[city]
                 current_time = new_graph.get_route_time(random_route_id)
-                next_station = Randomise.rand_next_station(self, last_station, current_time)
+                next_station = Randomise.rand_next_station(self, last_station,
+                                                           current_time)
 
                 if next_station:
+                    # Adds either first or last connection to route.
                     if first_or_last == 0:
-                        # add last station
-                        new_graph.add_station(next_station.city, random_route_id)
+                        new_graph.add_station(next_station.city,
+                                              random_route_id)
                     else:
-                        # add first station
-                        new_graph.add_station(next_station.city, random_route_id, False)
+                        new_graph.add_station(next_station.city,
+                                              random_route_id, False)
 
     def mutate_graph(self, new_graph):
         """Mutates the graph by editing a single route of the graph."""
@@ -116,4 +117,3 @@ class HillClimber:
             self.counter += 1
 
             self.check_solution(new_graph)
-
