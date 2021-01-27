@@ -253,11 +253,11 @@ class Depth():
                         self.check_solution(new_graph)
                         self.new_route(new_graph, current_route)
 
-            # Update graph, with best solution
+            # Update graph, with best solution.
             self.graph = self.best_solution
 
-        # Add possibilty to exit while-loop with keyboardinterrupt
+        # Add possibilty to exit while-loop with KeyboardInterrupt.
         except KeyboardInterrupt:
-            # Update graph, with best solution
+            # Update graph, with best solution.
             self.graph = self.best_solution
             print(" Ctrl-C pressed to terminate depth.py while statement")
