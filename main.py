@@ -1,4 +1,4 @@
-import csv
+from csv import writer
 
 from code.algorithms import depth as df
 from code.algorithms import greedy as gr
@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
     #------------------------ Create CSV -------------------------------------#
     with open('results/output.csv', 'w', newline='') as file:
-        writer = csv.writer(file)
+        writer = writer(file)
 
         # Writes the header.
         writer.writerow(["train", "stations"])
