@@ -46,23 +46,38 @@ class HillClimber:
         route_stations = random_route.get_stations()
 
         if self.counter > 50:
-            if len(route_stations) > 1:
+            test = random.randint(0, 1)
+            if len(route_stations) > 1 and test == 1:
                 for _ in range(len(route_stations) - 1):
                     new_graph.remove_station(route_stations[-1],
                                              random_route_id)
 
-            del new_graph.routes[random_route_id]
+                del new_graph.routes[random_route_id]
+
+            # if random.randint(0, 1) == 1:
+            #     nodes = list(new_graph.nodes.values())
+            #     station = Randomise.get_rand_station(self, nodes)
+
+            #     route_id = len(new_graph.routes) + 1
+
+            #     new_graph.add_route(route_id)
+            #     new_graph.add_station(station.city, route_id)
+
+            #     next_station = Randomise.rand_next_station(self, station, 0)
+            #     new_graph.add_station(next_station.city, route_id)
+
             self.counter = 0
         else:
             # Randomly removes first/last connection of the route.
             first_or_last = random.randint(0, 1)
             if len(route_stations) > 1:
-                if first_or_last == 0:
-                    new_graph.remove_station(route_stations[-1],
-                                             random_route_id)
-                else:
-                    new_graph.remove_station(route_stations[0],
-                                             random_route_id)
+                if random.randint(0, 1) == 1:
+                    if first_or_last == 0:
+                        new_graph.remove_station(route_stations[-1],
+                                                random_route_id)
+                    else:
+                        new_graph.remove_station(route_stations[0],
+                                                random_route_id)
 
             # Randomly adds a connection or leaves state as is.
             add_or_leave = random.randint(0,1)
@@ -117,3 +132,5 @@ class HillClimber:
             self.counter += 1
 
             self.check_solution(new_graph)
+
+            print(len(self.graph.routes))
