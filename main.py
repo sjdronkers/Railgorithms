@@ -149,3 +149,6 @@ if __name__ == "__main__":
 
         # Writes the footer.
         writer.writerow(["score", used_algo.graph.get_result()])
+
+    print(color_begin + "The output has been saved to results/output.csv"
+        + color_end)
