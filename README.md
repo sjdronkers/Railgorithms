@@ -1,13 +1,13 @@
 # Railgorithms
 
-Train companies are always looking to find the most efficient routes to cover all the stations and railways. 
-With our program we are going to use two algorithms to come up with different solutions. 
+Train companies are always looking to find the most efficient routes to cover all the stations and railways.
+With our program we are going to use two algorithms to come up with different solutions.
 
 ## Getting Started
 
 ### Prerequisites
 
-This code base is written in Python 3.8.3 and up. 
+This code base is written in Python 3.8.3 and up.
 Other requirements such as packages, can be installed by entering the following command:
 
 ```
@@ -23,9 +23,12 @@ conda install --file requirements.txt
 ### Usage
 
 You can run the program using:
+
 ```
 python3 main.py
 ```
+
+You will be guided through the process of picking an algorithm through questions in the terminal.
 
 ### Structure
 
