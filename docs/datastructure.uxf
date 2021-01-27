@@ -1,4 +1,4 @@
-<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>10</x><y>55</y><w>330</w><h>180</h></coordinates><panel_attributes>Graph
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>90</x><y>95</y><w>330</w><h>260</h></coordinates><panel_attributes>Graph
 --
 nodes:{node.city: Node}
 routes: {route_id: Route)
@@ -8,15 +8,18 @@ load_connections(self, csv): None
 add_route(self, route_id): None
 add_station(self, city, route_id): None
 remove_station(self, city, route_id): None
-connection_change(self, [city_1, city_2], remove = False): None
-get_route_time(route_id): Int
+connection_change(self, [city_1, city_2], *remove): None
+get_route_time(self, route_id): Int
+driven_connections(self): Int
+total_connections(self): Int
+covered_connections(self): Int
 get_connections_p_value(self): Float
 get_route_time_total(self): Int
-get_result(self): Float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>420</x><y>55</y><w>280</w><h>170</h></coordinates><panel_attributes>Node (Station)
+get_result(self): Float</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>95</y><w>280</w><h>170</h></coordinates><panel_attributes>Node (Station)
 --
 city: String
 id: Int
-connections: {city : [time, Int] }
+connections: {city : [time, Int]}
 x_coordinate: Float
 y_coordinate: Float
 --
@@ -24,15 +27,15 @@ add_connection(self, city, time): None
 get_connections(self): connections
 get_coordinates(self): (x_coordinate, y_coordinate)
 get_n_unused_connections(self): Int
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>52</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..n</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>292</y><w>340</w><h>140</h></coordinates><panel_attributes>Route
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>410</x><y>92</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>352</y><w>280</w><h>140</h></coordinates><panel_attributes>Route
 --
 route_id: Int
 stations: [city]
 --
-add_station(self, city): None
-get_stations(self): stations
-get_route_time(self):Int
+add_station(self, city, *end): None
 remove_station(self, city): None
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>330</x><y>222</y><w>50</w><h>90</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..n</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element></diagram>
+get_stations(self): stations
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>410</x><y>342</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes><additional_attributes>10;10;90;10</additional_attributes></element></diagram>
