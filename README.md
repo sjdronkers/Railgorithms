@@ -1,7 +1,8 @@
 # Railgorithms
 
 Train companies are always looking to find the most efficient routes to cover all the stations and railways.
-With our program we are going to use two algorithms to come up with different solutions.
+With our program we implemented multiple algorithms to come up with a good solution.
+To come up with a good solution most connections have to be included in the routes of the trains.
 
 ## Getting Started
 
@@ -28,7 +29,7 @@ You can run the program using:
 python3 main.py
 ```
 
-You will be guided through the process of picking an algorithm through questions in the terminal.
+You will be guided through the process of picking an algorithm by questions in the terminal.
 
 ### Structure
 
