@@ -95,7 +95,7 @@ class Graph():
             self.connection_change(cities, True)
 
     def connection_change(self, cities, remove = False):
-        """Sets the back & forth connection between the stations as (un)covered."""
+        """Sets the back & forth connection between stations as (un)covered."""
         station_1 = self.nodes[cities[0]]
         station_2 = self.nodes[cities[1]]
 

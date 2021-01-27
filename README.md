@@ -36,17 +36,17 @@ You will be guided through the process of picking an algorithm by questions in t
 
 The following list provides the most important directories and files:
 
-- **/code**: contains alle the code for this project
+- **/code**: contains all code in this project
   - **/code/README.md**: explanation of the algorithms
   - **/code/algorithms**: code for the algorithms
   - **/code/classes**: classes used in this project
   - **/code/visualisation**: code for the data visualization
 - **/data**: contains all the data files
   - **/data/README.md**: explains the different types of data
-  - **/data/Holland**: data for the provinces North and South Holland
-  - **/data/Nationaal**: data for the whole country
-- **/docs**: contains all the documentation like an UML diagram
-- **/results**: folder where the results appear after you run  the program
+  - **/data/Holland**: stations and connections of the provinces North and South Holland
+  - **/data/Nationaal**: stations and connections of the Netherlands
+- **/docs**: contains a UML diagram with all classes visualised.
+- **/results**: folder where the results appear after you have run the program
   - **/results/README.md**: explains the different kinds of output
 
 ## Authors

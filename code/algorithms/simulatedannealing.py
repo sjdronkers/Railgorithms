@@ -23,7 +23,7 @@ class SimulatedAnnealing(HillClimber):
     |   cooldown scheme.
     |check_solution(new_graph): checks if the new graph is accepted.
     """
-    def __init__(self, graph, max_routes, time_frame, temperature=1, linear=False):
+    def __init__(self, graph, max_routes, time_frame, temperature=1, linear=True):
         super().__init__(graph, max_routes, time_frame)
 
         # Starting and current temperature.
@@ -55,7 +55,11 @@ class SimulatedAnnealing(HillClimber):
 
         # Calculates the probability of accepting this new graph.
         delta = old_score - new_score
-        prob = math.exp(-delta/self.temp)
+
+        try:
+            prob = math.exp(-delta/self.temp)
+        except OverflowError:
+            prob = float('inf')
 
         if random.random() < prob:
             self.graph = new_graph

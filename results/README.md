@@ -2,6 +2,7 @@
 
 In this folder the results will appear after you run the program.
 The output contains up to three files as described below.
+In the results folder, the best result of the Depth first search can be found as examples.
 
 ## Dynamic & Static Railmap
 

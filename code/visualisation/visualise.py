@@ -107,6 +107,9 @@ def visualise(graph, want_anim):
 
         return lines
 
+    color_begin = "\033[92m"
+    color_end = "\033[0m"
+
     # Creates an animation or static map depending on given choice.
     if want_anim:
         anim = animation.FuncAnimation(fig, animate,
@@ -116,10 +119,8 @@ def visualise(graph, want_anim):
 
         anim.save('results/dynamic_railmap.gif')
 
-        color_begin = "\033[92m"
-        color_end = "\033[0m"
         print(color_begin
-              + "Animation successfully saved to results/dynamic_railmap.gif!"
+              + "Animated railamp successfully saved to results/dynamic_railmap.gif!"
               + color_end)
     else:
         # Plots a line for each route with a unique colour and label.
@@ -145,3 +146,7 @@ def visualise(graph, want_anim):
     adjust_text(texts)
 
     plt.savefig('results/static_railmap.png')
+
+    print(color_begin
+          + "Railmap successfully saved to results/static_railmap.gif!"
+          + color_end)
