@@ -1,9 +1,9 @@
 # Railgorithms
 
 Train companies aim to find the most efficient routes to cover all the stations and connections.
+This is a typical constraint optimisation problem with a discrete state-space.
 With our program we implemented multiple algorithms to come up with a good solution.
 To come up with a good solution most connections have to be included in the routes of the trains.
-
 
 ## Getting Started
 
