@@ -1,8 +1,9 @@
 # Railgorithms
 
-Train companies are always looking to find the most efficient routes to cover all the stations and railways.
+Train companies aim to find the most efficient routes to cover all the stations and connections.
 With our program we implemented multiple algorithms to come up with a good solution.
 To come up with a good solution most connections have to be included in the routes of the trains.
+
 
 ## Getting Started
 
