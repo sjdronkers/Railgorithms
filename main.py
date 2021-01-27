@@ -85,6 +85,7 @@ if __name__ == "__main__":
 
         # Notifies the user a base state has been created.
         print(color_begin + "Base state is created successfully!" + color_end)
+        print(color_begin + f"Score is: {base_algo.graph.get_result()}" + color_end)
 
         # Asks for the iteration settings.
         iterate = int(input("How many iterations do you want? "))
@@ -124,6 +125,8 @@ if __name__ == "__main__":
     else:
         used_algo.run()
         print(color_begin + "Algorithm ran correctly" + color_end)
+
+    print(color_begin + f"Your final score is: {used_algo.graph.get_result()}" + color_end)
 
 
     #------------------------ Visualisation ----------------------------------#
