@@ -78,10 +78,10 @@ class Graph():
         route = Route(route_id)
         self.routes[route_id] = route
 
-    def add_station(self, city, route_id, first=True):
+    def add_station(self, city, route_id, end=True):
         """Adds the city to the route and marks connection as covered."""
         route = self.routes[route_id]
-        cities = route.add_station(city, first)
+        cities = route.add_station(city, end)
 
         if cities != False:
             self.connection_change(cities)
