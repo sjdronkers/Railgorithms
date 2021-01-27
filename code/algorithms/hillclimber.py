@@ -54,17 +54,19 @@ class HillClimber:
 
                 del new_graph.routes[random_route_id]
 
-            # if random.randint(0, 1) == 1:
-            #     nodes = list(new_graph.nodes.values())
-            #     station = Randomise.get_rand_station(self, nodes)
+            route_ids = new_graph.routes.keys()
+            possible_ids = [id for id in range(1, self.max_routes) if id not in route_ids]
+            if random.randint(0, 10) == 0 and possible_ids:
+                nodes = list(new_graph.nodes.values())
+                station = Randomise.get_rand_station(self, nodes)
 
-            #     route_id = len(new_graph.routes) + 1
+                route_id = possible_ids[0]
 
-            #     new_graph.add_route(route_id)
-            #     new_graph.add_station(station.city, route_id)
+                new_graph.add_route(route_id)
+                new_graph.add_station(station.city, route_id)
 
-            #     next_station = Randomise.rand_next_station(self, station, 0)
-            #     new_graph.add_station(next_station.city, route_id)
+                next_station = Randomise.rand_next_station(self, station, 0)
+                new_graph.add_station(next_station.city, route_id)
 
             self.counter = 0
         else:
@@ -114,6 +116,7 @@ class HillClimber:
 
         # Overwrites the current graph if new one is a better solution.
         if new_score > self.score:
+            self.counter = 0
             self.graph = new_graph
             self.score = new_score
 
@@ -132,5 +135,3 @@ class HillClimber:
             self.counter += 1
 
             self.check_solution(new_graph)
-
-            print(len(self.graph.routes))
