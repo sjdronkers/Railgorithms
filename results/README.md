@@ -2,7 +2,7 @@
 
 In this folder the results will appear after you run the program.
 The output contains up to three files as described below.
-In the results folder, the best result of the Depth first search can be found as examples.
+In the results folder our results of our best score (with the use of Simulated Annealing) can be found.
 
 ## Dynamic & Static Railmap
 
